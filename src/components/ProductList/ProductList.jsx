@@ -95,7 +95,7 @@ const ProductList = () => {
 	const [products, setProducts] = useState([]);
 	const [addedItems, setAddedItems] = useState([]);
 	//const [isFetched, setIsFetched] = useState(false);
-	const { tg, queryId } = useTelegram();
+	const { tg, queryId, user } = useTelegram();
 
 	const getTotalPrice = (items) => {
 		return items.reduce((total, newItem) => total + parseInt(newItem.price), 0);
@@ -106,6 +106,7 @@ const ProductList = () => {
 			products: addedItems,
 			totalPrice: getTotalPrice(addedItems),
 			queryId,
+            username: user?.username
 		};
 		fetch('http://localhost:8000/web-data', {
 			method: 'POST',
@@ -160,7 +161,7 @@ const ProductList = () => {
 			//console.log(`total price ${getTotalPrice(newItems)}`)
 			tg.MainButton.show();
 			tg.MainButton.setParams({
-				text: `Общая сумма: ${getTotalPrice(newItems)} руб.`,
+				text: `Общая сумма покупок: ${getTotalPrice(newItems)} руб.`,
 			});
 		}
 	};
