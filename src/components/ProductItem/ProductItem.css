@@ -4,12 +4,16 @@
 	border: 1px solid var(--tg-theme-button-color);
 	padding: 15px;
 	width: 170px;
-    background: linear-gradient(#1095c1 0 0) var(--p, 0) / var(--p, 0) no-repeat;
-    transition: 0.4s, background-position 0s;
+    --c: no-repeat linear-gradient(#6ac3e0 0 0);
+    background: 
+        var(--c)  calc(-101% + var(--p,0%)) 100% / 50.1% var(--p,.15em),
+        var(--c)  calc( 201% - var(--p,0%)) 0    / 50.1% var(--p,.15em);
+    transition: .3s var(--t,0s), background-position .3s calc(0.3s - var(--t,0s));    
 }
 
 .product:hover {
-  --p: 100%;
+  --p: 101%;
+  --t: 0.3s;
   color: lightcyan;
 }
 
@@ -27,13 +31,13 @@ img {
 }
 
 img:hover {
-	scale: 1.05;
+	scale: 1.1;
 }
 
 .title {
 	font-size: 1em;
 	font-weight: 600;
-	margin: 5px 0;
+	margin: 10px 0;
 	text-align: center;
 }
 
