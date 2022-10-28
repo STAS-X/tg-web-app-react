@@ -96,7 +96,7 @@ const ProductList = () => {
 	const [addedItems, setAddedItems] = useState([]);
 	//const [isFetched, setIsFetched] = useState(false);
 	const { tg, queryId, user } = useTelegram();
-	console.log(process.env, 'env data');
+
 	const getTotalPrice = (items) => {
 		return items.reduce((total, newItem) => total + parseInt(newItem.price), 0);
 	};
