@@ -8,84 +8,84 @@ const initProducts = [
 	{
 		id: 1,
 		title: 'Джинсы 1',
-		image: '/json/g/240/240/jeans,pants,girl?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/jeans,pants,girl?lock=',
 		price: 1600,
 		description: 'Синего цвета, прямые',
 	},
 	{
 		id: 2,
 		title: 'Джинсы 2',
-		image: '/json/g/240/240/jeans,pants,boy?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/jeans,pants,boy?lock=',
 		price: 2300,
 		description: 'Красного цвета, узкие',
 	},
 	{
 		id: 3,
 		title: 'Джинсы 3',
-		image: '/json/g/240/240/jeans,pants,kids?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/jeans,pants,kids?lock=',
 		price: 5200,
 		description: 'Зеленого цвета, широкие',
 	},
 	{
 		id: 4,
 		title: 'Джинсы 4',
-		image: '/json/g/240/240/jeans,pants,rap?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/jeans,pants,rap?lock=',
 		price: 4500,
 		description: 'Черного цвета, модные',
 	},
 	{
 		id: 5,
 		title: 'Куртка 1',
-		image: '/json/g/240/240/jacket,girl?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/jacket,girl?lock=',
 		price: 15000,
 		description: 'Серого цвета, летняя',
 	},
 	{
 		id: 6,
 		title: 'Куртка 2',
-		image: '/json/g/240/240/jacket,boy?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/jacket,boy?lock=',
 		price: 14700,
 		description: 'Черного цвета, сезонная',
 	},
 	{
 		id: 7,
 		title: 'Куртка 3',
-		image: '/json/g/240/240/jacket,kids?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/jacket,kids?lock=',
 		price: 9800,
 		description: 'Красного цвета, зимняя',
 	},
 	{
 		id: 8,
 		title: 'Куртка 4',
-		image: '/json/g/240/240/jacket,rap?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/jacket,rap?lock=',
 		price: 12900,
 		description: 'Желтого цвета, осенняя',
 	},
 	{
 		id: 9,
 		title: 'Рубашка 1',
-		image: '/json/g/240/240/shirt,girl?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/shirt,girl?lock=',
 		price: 5200,
 		description: 'Синего цвета, легкая',
 	},
 	{
 		id: 10,
 		title: 'Рубашка 2',
-		image: '/json/g/240/240/shirt,boy?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/shirt,boy?lock=',
 		price: 6500,
 		description: 'Черного цвета, хлопковая',
 	},
 	{
 		id: 11,
 		title: 'Рубашка 3',
-		image: '/json/g/240/240/shirt,kids?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/shirt,kids?lock=',
 		price: 4500,
 		description: 'Зеленого цвета, ультратонкая',
 	},
 	{
 		id: 12,
 		title: 'Рубашка 4',
-		image: '/json/g/240/240/shirt,rap?lock=',
+		image: 'https://loremflickr.com/json/g/240/240/shirt,rap?lock=',
 		price: 2500,
 		description: 'Изумрудного цвета, узкая',
 	},
@@ -128,7 +128,7 @@ const ProductList = () => {
 		initProducts.forEach((prod, index) => {
 			if (prod.image.slice(-1) === '=') {
 				promisesToFetch.push(
-					fetch(`${prod.image}${uuid().slice(0, 8)}`)
+					fetch(`${process.env.REACT_APP_WEB_APP}/${process.env.REACT_APP_API_ROUTER}`, {method:'GET', headers: {url_data:`${prod.image}${uuid().slice(0, 8)}`}})
 						.then((response) => response.json())
 						.then((data) => {
 							prod.image = data.file;

@@ -10,7 +10,6 @@ function App() {
 
   const { tg, handleToggleButton } = useTelegram();
 
-  console.log(tg, 'init from telegram bot');
   useEffect(()=>{
     tg.ready();
   },[])
