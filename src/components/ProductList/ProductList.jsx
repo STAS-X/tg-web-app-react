@@ -129,7 +129,12 @@ const ProductList = () => {
 			if (prod.image.slice(-1) === '=') {
 				promisesToFetch.push(
 					fetch(`${prod.image}${uuid().slice(0, 8)}`, {
-						headers: { 'Access-Control-Allow-Origin': '*' },
+						headers: {
+							'Access-Control-Allow-Origin': '*',
+							'Access-Control-Allow-Headers':
+								'*',
+							'Access-Control-Allow-Methods': 'GET, OPTIONS',
+						},
 					})
 						.then((response) => response.json(index))
 						.then((data) => {
