@@ -128,16 +128,32 @@ const ProductList = () => {
 		initProducts.forEach((prod, index) => {
 			if (prod.image.slice(-1) === '=') {
 				promisesToFetch.push(
-					fetch(`${process.env.REACT_APP_WEB_APP}/${process.env.REACT_APP_API_ROUTER}`, {method:'GET', headers: {url_data:`${prod.image}${uuid().slice(0, 8)}`}})
-						.then((response) => response.json())
-						.then((data) => {
-							prod.image = data.file;
-							return new Promise((resolve, reject) => resolve(prod));
-						})
+					new Promise((resolve, reject) => {
+						const newImage = fetch(
+							`${process.env.REACT_APP_WEB_APP}/${process.env.REACT_APP_API_ROUTER}`,
+							{
+								method: 'GET',
+								headers: {
+									'url_data': `${prod.image}${uuid().slice(0, 8)}`,
+									'prodid': prod.id,
+								},
+							}
+						).then((response) => response.json());
+						resolve(newImage);
+					})
 				);
 			}
 		});
-		Promise.all(promisesToFetch).then((data) => setProducts(data));
+		Promise.all(promisesToFetch).then((data) =>
+			setProducts(
+				data.map((img) => {
+					const newProd = initProducts.filter((prod) => prod.id === img.prodId);
+					newProd.image = img.file;
+                    console.log(img, newProd,'all data')
+					return newProd;
+				})
+			)
+		);
 		//
 	}, []);
 
