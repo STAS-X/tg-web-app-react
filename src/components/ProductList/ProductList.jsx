@@ -109,7 +109,7 @@ const ProductList = () => {
 			username: user?.username,
 		};
 		fetch(
-			`${process.env.REACT_APP_WEB_APP}:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_API_ROUTER}`,
+			`${process.env.REACT_APP_WEB_APP}/${process.env.REACT_APP_API_ROUTER}`,
 			{
 				method: 'POST',
 				headers: {
