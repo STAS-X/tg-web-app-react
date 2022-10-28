@@ -96,7 +96,7 @@ const ProductList = () => {
 	const [addedItems, setAddedItems] = useState([]);
 	//const [isFetched, setIsFetched] = useState(false);
 	const { tg, queryId, user } = useTelegram();
-
+	console.log(process.env, 'env data');
 	const getTotalPrice = (items) => {
 		return items.reduce((total, newItem) => total + parseInt(newItem.price), 0);
 	};
@@ -106,33 +106,40 @@ const ProductList = () => {
 			products: addedItems,
 			totalPrice: getTotalPrice(addedItems),
 			queryId,
-            username: user?.username
+			username: user?.username,
 		};
-		fetch('http://localhost:8000/web-data', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(data),
-		});
+		fetch(
+			`${process.env.REACT_APP_WEB_APP}:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_API_ROUTER}`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			}
+		);
 	}, [addedItems]);
 
 	useEffect(() => {
-        if (products.length>0) return;
+		if (products.length > 0) return;
 
 		const promisesToFetch = [];
 
 		initProducts.forEach((prod, index) => {
 			if (prod.image.slice(-1) === '=') {
 				promisesToFetch.push(
-					fetch(`${prod.image}${uuid().slice(0, 8)}`)
+					fetch(`${prod.image}${uuid().slice(0, 8)}`, {
+						headers: { 'Access-Control-Allow-Origin': '*' },
+					})
 						.then((response) => response.json(index))
-                        .then(data => {prod.image = data.file;  return new Promise((resolve,reject)=>resolve(prod))})
+						.then((data) => {
+							prod.image = data.file;
+							return new Promise((resolve, reject) => resolve(prod));
+						})
 				);
 			}
 		});
-        Promise.all(promisesToFetch).then(data=> setProducts(data)
-        );
+		Promise.all(promisesToFetch).then((data) => setProducts(data));
 		//
 	}, []);
 
@@ -168,14 +175,15 @@ const ProductList = () => {
 
 	return (
 		<div className={'list'}>
-			{products.length>0 && products.map((item) => (
-				<ProductItem
-					key={item.id}
-					product={item}
-					onAdd={onAdd}
-					className={'item'}
-				/>
-			))}
+			{products.length > 0 &&
+				products.map((item) => (
+					<ProductItem
+						key={item.id}
+						product={item}
+						onAdd={onAdd}
+						className={'item'}
+					/>
+				))}
 		</div>
 	);
 };
