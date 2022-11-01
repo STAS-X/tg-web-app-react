@@ -4,14 +4,23 @@ import './ProductItem.css';
 
 const ProductItem = ({ product, className, onAdd }) => {
 	const onAddHandler = () => {
-        onAdd(product); 
-    };
+		onAdd(product);
+	};
 
 	return (
 		<div className={'product ' + className}>
-			<div className={'img'}>
-                <img alt={product.description} src={product.image}/>
-            </div>
+			<div
+				className={'img'}
+				style={{
+					backgroundImage:
+						product.image.slice(-1) === '='
+							? `url("https://via.placeholder.com/200?text=${product.title.replace(
+									/\s/g,
+									'+'
+							  )}")`
+							: `url("${product.image}")`,
+				}}
+			></div>
 			<div className={'title'}>{product.title}</div>
 			<div className={'description'}>{product.description}</div>
 			<div className={'price'}>
